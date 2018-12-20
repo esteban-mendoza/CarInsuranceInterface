@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<clientes>
+    <cliente>
+        <nombre>Mike</nombre>
+        <direccion>Colonia Roma</direccion>
+    </cliente>
+    <cliente>
+        <nombre>Goku</nombre>
+        <direccion>Veyita</direccion>
+    </cliente>
+    <cliente>
+        <nombre>Mario</nombre>
+        <direccion>Nintendo</direccion>
+    </cliente>
+    <cliente>
+        <nombre>Bowser</nombre>
+        <direccion>Nintendo</direccion>
+    </cliente>
+</clientes>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<vehiculos>
+    <vehiculo>
+        <placas>358FGV</placas>
+        <marca>VolksWagen</marca>
+        <modelo>Gol</modelo>
+        <id_factura>2</id_factura>
+    </vehiculo>
+    <vehiculo>
+        <placas>452TGH</placas>
+        <marca>Mercury</marca>
+        <modelo>Marinner</modelo>
+        <id_factura>3</id_factura>
+    </vehiculo>
+    <vehiculo>
+        <placas>485JOP</placas>
+        <marca>Nissan</marca>
+        <modelo>Leaf</modelo>
+        <id_factura>4</id_factura>
+    </vehiculo>
+    <vehiculo>
+        <placas>369TYU</placas>
+        <marca>Toyota</marca>
+        <modelo>Yaris</modelo>
+        <id_factura>1</id_factura>
+    </vehiculo>
+</vehiculos>
+

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<facturas>
+    <factura>
+        <costo_total>50000</costo_total>
+    </factura>
+    <factura>
+        <costo_total>130000</costo_total>
+    </factura>
+    <factura>
+        <costo_total>250000</costo_total>
+    </factura>
+    <factura>
+        <costo_total>48900</costo_total>
+    </factura>
+</facturas>

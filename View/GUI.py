@@ -2,12 +2,17 @@ from tkinter import *
 from tkinter import ttk
 from View.Datepicker import Datepicker
 
+"""
+Autor: Jorge Esteban Mendoza Ortiz (418002863)
+Email: esteban.mendoza@ciencias.unam.mx
+"""
+
 
 class GUI(ttk.Frame):
 
     def __init__(self, master):
         # Main frame
-        super().__init__(master, padding="3 3 12 12")
+        super().__init__(master)
         super().grid(row=0, column=0, sticky=(N, W, E, S))
 
         # Master settings
@@ -15,8 +20,24 @@ class GUI(ttk.Frame):
         master.columnconfigure(0, weight=1)
         master.rowconfigure(0, weight=1)
 
+        # Notebook
+        self.notebook = ttk.Notebook(self, padding=10)
+        self.notebook.grid(row=0, column=0, sticky=(N, W, E, S))
+
+        # Consultas frame
+        self.fr_consultas = ttk.Frame(self.notebook)
+        self.notebook.add(self.fr_consultas, text="Consultas", padding=10)
+
+        # Agregar registros / importar frame
+        self.fr_agregar = ttk.Frame(self.notebook)
+        self.notebook.add(self.fr_agregar, text="Agregar / Importar", padding=10)
+
+        # Ayuda frame
+        self.fr_ayuda = ttk.Frame(self.notebook)
+        self.notebook.add(self.fr_ayuda, text="Ayuda", padding=10)
+
         # Cliente
-        self.lf_cliente = ttk.Labelframe(self, text="Cliente")
+        self.lf_cliente = ttk.Labelframe(self.fr_consultas, text="Cliente")
         self.lf_cliente.grid(row=0, column=0, rowspan=3, columnspan=6)
 
         self.val_id_cliente = BooleanVar()
@@ -56,7 +77,7 @@ class GUI(ttk.Frame):
             child.grid_configure(padx=5, pady=5)
 
         # Factura
-        self.lf_factura = ttk.LabelFrame(self, text="Factura")
+        self.lf_factura = ttk.LabelFrame(self.fr_consultas, text="Factura")
         self.lf_factura.grid(row=0, column=6, rowspan=3, columnspan=3)
 
         self.val_id_factura = BooleanVar()
@@ -85,7 +106,7 @@ class GUI(ttk.Frame):
             child.grid_configure(padx=5, pady=5)
 
         # Vehículo
-        self.lf_vehiculo = ttk.LabelFrame(self, text="Vehículo")
+        self.lf_vehiculo = ttk.LabelFrame(self.fr_consultas, text="Vehículo")
         self.lf_vehiculo.grid(row=3, column=6, rowspan=4, columnspan=3)
 
         self.val_placas = BooleanVar()
@@ -125,7 +146,7 @@ class GUI(ttk.Frame):
             child.grid_configure(padx=5, pady=5)
 
         # Póliza
-        self.lf_poliza = ttk.LabelFrame(self, text="Póliza")
+        self.lf_poliza = ttk.LabelFrame(self.fr_consultas, text="Póliza")
         self.lf_poliza.grid(row=3, column=0, rowspan=3, columnspan=6)
 
         self.val_costo_seguro = BooleanVar()
@@ -176,14 +197,14 @@ class GUI(ttk.Frame):
             child.grid_configure(padx=5, pady=5)
 
         # Table
-        self.tabla = ttk.Treeview(self, selectmode=BROWSE)
-        self.tabla.grid(row=7, column=0, rowspan=7, columnspan=8, sticky=W+E+N+S)
+        self.tabla = ttk.Treeview(self.fr_consultas, selectmode=BROWSE)
+        self.tabla.grid(row=7, column=0, rowspan=7, columnspan=9, sticky=W+E+N+S)
 
         # Scroll bars
-        self.vscroll = ttk.Scrollbar(self, orient=VERTICAL)
-        self.vscroll.grid(row=7, column=8, rowspan=7, sticky=W+N+S)
+        self.vscroll = ttk.Scrollbar(self.fr_consultas, orient=VERTICAL)
+        self.vscroll.grid(row=7, column=9, rowspan=7, sticky=W+N+S)
 
-        self.hscroll = ttk.Scrollbar(self, orient=HORIZONTAL)
+        self.hscroll = ttk.Scrollbar(self.fr_consultas, orient=HORIZONTAL)
         self.hscroll.grid(row=14, column=0, columnspan=8, sticky=W+E+N)
 
         # Scroll bars binding
@@ -194,20 +215,36 @@ class GUI(ttk.Frame):
         self.tabla.configure(xscrollcommand=self.hscroll.set)
 
         # Buttons
-        self.bo_mostrar = ttk.Button(self, text="Mostrar todo", width=16)
-        self.bo_mostrar.grid(row=7, column=9, sticky=W)
+        self.bo_mostrar = ttk.Button(self.fr_consultas, text="Mostrar todo", width=16)
+        self.bo_mostrar.grid(row=1, column=9, sticky=W)
 
-        self.bo_buscar = ttk.Button(self, text="Buscar", width=16)
-        self.bo_buscar.grid(row=8, column=9, sticky=W)
+        self.bo_limpiar = ttk.Button(self.fr_consultas, text="Limpiar campos", width=16)
+        self.bo_limpiar.grid(row=2, column=9, sticky=W)
 
-        self.bo_actualizar = ttk.Button(self, text="Actualizar", width=16)
-        self.bo_actualizar.grid(row=9, column=9, sticky=W)
+        self.bo_buscar = ttk.Button(self.fr_consultas, text="Buscar", width=16)
+        self.bo_buscar.grid(row=3, column=9, sticky=W)
 
-        self.bo_eliminar = ttk.Button(self, text="Eliminar", width=16)
-        self.bo_eliminar.grid(row=10, column=9, sticky=W)
+        self.bo_actualizar = ttk.Button(self.fr_consultas, text="Actualizar", width=16)
+        self.bo_actualizar.grid(row=4, column=9, sticky=W)
 
-        # Padding of elements in self
-        for child in self.winfo_children():
+        self.bo_eliminar = ttk.Button(self.fr_consultas, text="Eliminar", width=16)
+        self.bo_eliminar.grid(row=5, column=9, sticky=W)
+
+        # Padding of elements in consultas frame
+        for child in self.fr_consultas.winfo_children():
+            child.grid_configure(padx=5, pady=5)
+
+        # Ayuda frame widgets
+        self.la_autor = ttk.Label(self.fr_ayuda,
+                                  text="Autor: Jorge Esteban Mendoza Ortiz")
+        self.la_autor.grid(row=0, column=0)
+
+        self.la_email = ttk.Label(self.fr_ayuda,
+                                  text="Email: esteban.mendoza@ciencias.unam.mx")
+        self.la_email.grid(row=1, column=0)
+
+        # Padding of elements in ayuda frame
+        for child in self.fr_ayuda.winfo_children():
             child.grid_configure(padx=5, pady=5)
 
 

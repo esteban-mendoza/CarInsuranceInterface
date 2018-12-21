@@ -175,6 +175,37 @@ class GUI(ttk.Frame):
         for child in self.lf_poliza.winfo_children():
             child.grid_configure(padx=5, pady=5)
 
+        # Table
+        self.tabla = ttk.Treeview(self, selectmode=BROWSE)
+        self.tabla.grid(row=7, column=0, rowspan=7, columnspan=8, sticky=W+E+N+S)
+
+        # Scroll bars
+        self.vscroll = ttk.Scrollbar(self, orient=VERTICAL)
+        self.vscroll.grid(row=7, column=8, rowspan=7, sticky=W+N+S)
+
+        self.hscroll = ttk.Scrollbar(self, orient=HORIZONTAL)
+        self.hscroll.grid(row=14, column=0, columnspan=8, sticky=W+E+N)
+
+        # Scroll bars binding
+        self.vscroll.configure(command=self.tabla.yview)
+        self.hscroll.configure(command=self.tabla.xview)
+
+        self.tabla.configure(yscrollcommand=self.vscroll.set)
+        self.tabla.configure(xscrollcommand=self.hscroll.set)
+
+        # Buttons
+        self.bo_mostrar = ttk.Button(self, text="Mostrar todo", width=16)
+        self.bo_mostrar.grid(row=7, column=9, sticky=W)
+
+        self.bo_buscar = ttk.Button(self, text="Buscar", width=16)
+        self.bo_buscar.grid(row=8, column=9, sticky=W)
+
+        self.bo_actualizar = ttk.Button(self, text="Actualizar", width=16)
+        self.bo_actualizar.grid(row=9, column=9, sticky=W)
+
+        self.bo_eliminar = ttk.Button(self, text="Eliminar", width=16)
+        self.bo_eliminar.grid(row=10, column=9, sticky=W)
+
         # Padding of elements in self
         for child in self.winfo_children():
             child.grid_configure(padx=5, pady=5)

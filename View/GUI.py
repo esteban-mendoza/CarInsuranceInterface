@@ -205,7 +205,7 @@ class GUI(ttk.Frame):
         self.vscroll.grid(row=7, column=9, rowspan=7, sticky=W+N+S)
 
         self.hscroll = ttk.Scrollbar(self.fr_consultas, orient=HORIZONTAL)
-        self.hscroll.grid(row=14, column=0, columnspan=8, sticky=W+E+N)
+        self.hscroll.grid(row=14, column=0, columnspan=9, sticky=W+E+N)
 
         # Scroll bars binding
         self.vscroll.configure(command=self.tabla.yview)
@@ -236,7 +236,7 @@ class GUI(ttk.Frame):
 
         # Ayuda frame widgets
         self.la_autor = ttk.Label(self.fr_ayuda,
-                                  text="Autor: Jorge Esteban Mendoza Ortiz")
+                                  text="Autor: Jorge Esteban Mendoza Ortiz (418002863)")
         self.la_autor.grid(row=0, column=0)
 
         self.la_email = ttk.Label(self.fr_ayuda,
@@ -245,6 +245,92 @@ class GUI(ttk.Frame):
 
         # Padding of elements in ayuda frame
         for child in self.fr_ayuda.winfo_children():
+            child.grid_configure(padx=5, pady=5)
+
+        # Agregar / importar frame widgets
+        self.la_instruccion = ttk.Label(self.fr_agregar,
+                                        text="NOTA: Los campos marcados con asteriscos no pueden estar vacíos.")
+        self.la_instruccion.grid(row=0, column=0, pady=20)
+
+        self.lf_ag_cliente = ttk.Labelframe(self.fr_agregar, text="Cliente")
+        self.lf_ag_cliente.grid(row=1, column=0, rowspan=3, columnspan=8, sticky=(E, W))
+
+        self.la_ag_id_cliente = ttk.Label(self.lf_ag_cliente, text="id_cliente*")
+        self.la_ag_id_cliente.grid(row=1, column=1)
+
+        self.ag_id_cliente = StringVar()
+        self.en_ag_id_cliente = ttk.Entry(self.lf_ag_cliente, width=14, textvariable=self.ag_id_cliente)
+        self.en_ag_id_cliente.grid(row=1, column=2)
+
+        self.la_ag_nombre = ttk.Label(self.lf_ag_cliente, text="Nombre")
+        self.la_ag_nombre.grid(row=1, column=4)
+
+        self.ag_nombre = StringVar()
+        self.en_ag_nombre = ttk.Entry(self.lf_ag_cliente, width=40, textvariable=self.ag_nombre)
+        self.en_ag_nombre.grid(row=1, column=5)
+
+        self.la_ag_direccion = ttk.Label(self.lf_ag_cliente, text="Dirección")
+        self.la_ag_direccion.grid(row=2, column=1)
+
+        self.ag_direccion = StringVar()
+        self.en_ag_direccion = ttk.Entry(self.lf_ag_cliente, width=75, textvariable=self.ag_direccion)
+        self.en_ag_direccion.grid(row=2, column=2, columnspan=4)
+
+        self.bo_ag_cliente = ttk.Button(self.lf_ag_cliente, width=16,
+                                        text="Agregar cliente")
+        self.bo_ag_cliente.grid(row=1, column=6)
+
+        self.bo_importar_clientes = ttk.Button(self.lf_ag_cliente, width=16,
+                                             text="Importar clientes")
+        self.bo_importar_clientes.grid(row=2, column=6)
+
+        for child in self.lf_ag_cliente.winfo_children():
+            child.grid_configure(padx=5, pady=5)
+
+        self.lf_ag_vehiculo = ttk.Labelframe(self.fr_agregar, text="Vehículo")
+        self.lf_ag_vehiculo.grid(row=5, column=0, rowspan=3, columnspan=8, sticky=(E, W))
+
+        self.la_ag_placas = ttk.Label(self.lf_ag_vehiculo, text="Placas*")
+        self.la_ag_placas.grid(row=1, column=1)
+
+        self.ag_placas = StringVar()
+        self.en_ag_placas = ttk.Entry(self.lf_ag_vehiculo, width=16, textvariable=self.ag_placas)
+        self.en_ag_placas.grid(row=1, column=2)
+
+        self.la_ag_id_factura = ttk.Label(self.lf_ag_vehiculo, text="id_factura")
+        self.la_ag_id_factura.grid(row=2, column=1)
+
+        self.ag_id_factura = StringVar()
+        self.en_ag_id_factura = ttk.Entry(self.lf_ag_vehiculo, width=16, textvariable=self.ag_id_factura)
+        self.en_ag_id_factura.grid(row=2, column=2)
+
+        self.la_ag_marca = ttk.Label(self.lf_ag_vehiculo, text="Marca")
+        self.la_ag_marca.grid(row=1, column=3)
+
+        self.ag_marca = StringVar()
+        self.en_ag_marca = ttk.Entry(self.lf_ag_vehiculo, width=16, textvariable=self.ag_marca)
+        self.en_ag_marca.grid(row=1, column=4)
+
+        self.la_ag_modelo = ttk.Label(self.lf_ag_vehiculo, text="Modelo")
+        self.la_ag_modelo.grid(row=2, column=3)
+
+        self.ag_modelo = StringVar()
+        self.en_ag_modelo = ttk.Entry(self.lf_ag_vehiculo, width=16, textvariable=self.ag_modelo)
+        self.en_ag_modelo.grid(row=2, column=4)
+
+        self.bo_ag_vehiculo = ttk.Button(self.lf_ag_vehiculo, width=18,
+                                         text="Agregar vehículo")
+        self.bo_ag_vehiculo.grid(row=1, column=6)
+
+        self.bo_importar_vehiculo = ttk.Button(self.lf_ag_vehiculo, width=18,
+                                               text="Importar vehículos")
+        self.bo_importar_vehiculo.grid(row=2, column=6)
+
+        for child in self.lf_ag_vehiculo.winfo_children():
+            child.grid_configure(padx=5, pady=5)
+
+        # Padding of elements in agregar / importar frame
+        for child in self.fr_agregar.winfo_children():
             child.grid_configure(padx=5, pady=5)
 
 

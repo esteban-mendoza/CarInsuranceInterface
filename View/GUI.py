@@ -48,7 +48,7 @@ class GUI(ttk.Frame):
         self.la_id_cliente.grid(row=1, column=1)
 
         self.id_cliente = StringVar()
-        self.en_id_cliente = ttk.Entry(self.lf_cliente, width=14, textvariable=self.id_cliente)
+        self.en_id_cliente = ttk.Entry(self.lf_cliente,  textvariable=self.id_cliente)
         self.en_id_cliente.grid(row=1, column=2)
 
         self.val_nombre = BooleanVar()
@@ -59,7 +59,7 @@ class GUI(ttk.Frame):
         self.la_nombre.grid(row=1, column=4)
 
         self.nombre = StringVar()
-        self.en_nombre = ttk.Entry(self.lf_cliente, width=40, textvariable=self.nombre)
+        self.en_nombre = ttk.Entry(self.lf_cliente, width=34, textvariable=self.nombre)
         self.en_nombre.grid(row=1, column=5)
 
         self.val_direccion = BooleanVar()
@@ -70,7 +70,7 @@ class GUI(ttk.Frame):
         self.la_direccion.grid(row=2, column=1)
 
         self.direccion = StringVar()
-        self.en_direccion = ttk.Entry(self.lf_cliente, width=75, textvariable=self.direccion)
+        self.en_direccion = ttk.Entry(self.lf_cliente, width=72, textvariable=self.direccion)
         self.en_direccion.grid(row=2, column=2, columnspan=4)
 
         for child in self.lf_cliente.winfo_children():
@@ -88,7 +88,7 @@ class GUI(ttk.Frame):
         self.la_id_factura.grid(row=1, column=7)
 
         self.id_factura = StringVar()
-        self.en_id_factura = ttk.Entry(self.lf_factura, width=14, textvariable=self.id_factura)
+        self.en_id_factura = ttk.Entry(self.lf_factura,  textvariable=self.id_factura)
         self.en_id_factura.grid(row=1, column=8)
 
         self.val_costo_auto = BooleanVar()
@@ -99,7 +99,7 @@ class GUI(ttk.Frame):
         self.la_costo_auto.grid(row=2, column=7)
 
         self.costo_auto = StringVar()
-        self.en_costo_auto = ttk.Entry(self.lf_factura, width=14, textvariable=self.costo_auto)
+        self.en_costo_auto = ttk.Entry(self.lf_factura,  textvariable=self.costo_auto)
         self.en_costo_auto.grid(row=2, column=8)
 
         for child in self.lf_factura.winfo_children():
@@ -117,7 +117,7 @@ class GUI(ttk.Frame):
         self.la_placas.grid(row=4, column=1)
 
         self.placas = StringVar()
-        self.en_placas = ttk.Entry(self.lf_vehiculo, width=14, textvariable=self.placas)
+        self.en_placas = ttk.Entry(self.lf_vehiculo,  textvariable=self.placas)
         self.en_placas.grid(row=4, column=2)
 
         self.val_marca = BooleanVar()
@@ -128,7 +128,7 @@ class GUI(ttk.Frame):
         self.la_marca.grid(row=5, column=1)
 
         self.marca = StringVar()
-        self.en_marca = ttk.Entry(self.lf_vehiculo, width=14, textvariable=self.marca)
+        self.en_marca = ttk.Entry(self.lf_vehiculo,  textvariable=self.marca)
         self.en_marca.grid(row=5, column=2)
 
         self.val_modelo = BooleanVar()
@@ -139,7 +139,7 @@ class GUI(ttk.Frame):
         self.la_modelo.grid(row=6, column=1)
 
         self.modelo = StringVar()
-        self.en_modelo = ttk.Entry(self.lf_vehiculo, width=14, textvariable=self.modelo)
+        self.en_modelo = ttk.Entry(self.lf_vehiculo,  textvariable=self.modelo)
         self.en_modelo.grid(row=6, column=2)
 
         for child in self.lf_vehiculo.winfo_children():
@@ -157,7 +157,7 @@ class GUI(ttk.Frame):
         self.la_costo_seguro.grid(row=4, column=4)
 
         self.costo_seguro = StringVar()
-        self.en_costo_seguro = ttk.Entry(self.lf_poliza, width=14, textvariable=self.costo_seguro)
+        self.en_costo_seguro = ttk.Entry(self.lf_poliza,  textvariable=self.costo_seguro)
         self.en_costo_seguro.grid(row=4, column=5)
 
         self.val_poliza = BooleanVar()
@@ -168,7 +168,7 @@ class GUI(ttk.Frame):
         self.la_poliza.grid(row=5, column=4)
 
         self.poliza = StringVar()
-        self.en_poliza = ttk.Entry(self.lf_poliza, width=14, textvariable=self.poliza)
+        self.en_poliza = ttk.Entry(self.lf_poliza,  textvariable=self.poliza)
         self.en_poliza.grid(row=5, column=5)
 
         self.val_apertura = BooleanVar()
@@ -259,29 +259,29 @@ class GUI(ttk.Frame):
         self.la_ag_id_cliente.grid(row=1, column=1)
 
         self.ag_id_cliente = StringVar()
-        self.en_ag_id_cliente = ttk.Entry(self.lf_ag_cliente, width=14, textvariable=self.ag_id_cliente)
+        self.en_ag_id_cliente = ttk.Entry(self.lf_ag_cliente, textvariable=self.ag_id_cliente)
         self.en_ag_id_cliente.grid(row=1, column=2)
 
         self.la_ag_nombre = ttk.Label(self.lf_ag_cliente, text="Nombre")
         self.la_ag_nombre.grid(row=1, column=4)
 
         self.ag_nombre = StringVar()
-        self.en_ag_nombre = ttk.Entry(self.lf_ag_cliente, width=40, textvariable=self.ag_nombre)
+        self.en_ag_nombre = ttk.Entry(self.lf_ag_cliente, width=35, textvariable=self.ag_nombre)
         self.en_ag_nombre.grid(row=1, column=5)
 
         self.la_ag_direccion = ttk.Label(self.lf_ag_cliente, text="Dirección")
         self.la_ag_direccion.grid(row=2, column=1)
 
         self.ag_direccion = StringVar()
-        self.en_ag_direccion = ttk.Entry(self.lf_ag_cliente, width=75, textvariable=self.ag_direccion)
+        self.en_ag_direccion = ttk.Entry(self.lf_ag_cliente, width=68, textvariable=self.ag_direccion)
         self.en_ag_direccion.grid(row=2, column=2, columnspan=4)
 
-        self.bo_ag_cliente = ttk.Button(self.lf_ag_cliente, width=16,
+        self.bo_ag_cliente = ttk.Button(self.lf_ag_cliente, width=18,
                                         text="Agregar cliente")
         self.bo_ag_cliente.grid(row=1, column=6)
 
-        self.bo_importar_clientes = ttk.Button(self.lf_ag_cliente, width=16,
-                                             text="Importar clientes")
+        self.bo_importar_clientes = ttk.Button(self.lf_ag_cliente, width=18,
+                                               text="Importar clientes")
         self.bo_importar_clientes.grid(row=2, column=6)
 
         for child in self.lf_ag_cliente.winfo_children():
@@ -294,28 +294,28 @@ class GUI(ttk.Frame):
         self.la_ag_placas.grid(row=1, column=1)
 
         self.ag_placas = StringVar()
-        self.en_ag_placas = ttk.Entry(self.lf_ag_vehiculo, width=16, textvariable=self.ag_placas)
+        self.en_ag_placas = ttk.Entry(self.lf_ag_vehiculo, textvariable=self.ag_placas)
         self.en_ag_placas.grid(row=1, column=2)
 
         self.la_ag_id_factura = ttk.Label(self.lf_ag_vehiculo, text="id_factura")
         self.la_ag_id_factura.grid(row=2, column=1)
 
         self.ag_id_factura = StringVar()
-        self.en_ag_id_factura = ttk.Entry(self.lf_ag_vehiculo, width=16, textvariable=self.ag_id_factura)
+        self.en_ag_id_factura = ttk.Entry(self.lf_ag_vehiculo, textvariable=self.ag_id_factura)
         self.en_ag_id_factura.grid(row=2, column=2)
 
         self.la_ag_marca = ttk.Label(self.lf_ag_vehiculo, text="Marca")
         self.la_ag_marca.grid(row=1, column=3)
 
         self.ag_marca = StringVar()
-        self.en_ag_marca = ttk.Entry(self.lf_ag_vehiculo, width=16, textvariable=self.ag_marca)
+        self.en_ag_marca = ttk.Entry(self.lf_ag_vehiculo, textvariable=self.ag_marca)
         self.en_ag_marca.grid(row=1, column=4)
 
         self.la_ag_modelo = ttk.Label(self.lf_ag_vehiculo, text="Modelo")
         self.la_ag_modelo.grid(row=2, column=3)
 
         self.ag_modelo = StringVar()
-        self.en_ag_modelo = ttk.Entry(self.lf_ag_vehiculo, width=16, textvariable=self.ag_modelo)
+        self.en_ag_modelo = ttk.Entry(self.lf_ag_vehiculo, textvariable=self.ag_modelo)
         self.en_ag_modelo.grid(row=2, column=4)
 
         self.bo_ag_vehiculo = ttk.Button(self.lf_ag_vehiculo, width=18,
@@ -327,6 +327,41 @@ class GUI(ttk.Frame):
         self.bo_importar_vehiculo.grid(row=2, column=6)
 
         for child in self.lf_ag_vehiculo.winfo_children():
+            child.grid_configure(padx=5, pady=5)
+
+        self.lf_ag_factura = ttk.Labelframe(self.fr_agregar, text="Factura")
+        self.lf_ag_factura.grid(row=8, column=0, rowspan=3, columnspan=8, sticky=(E, W))
+
+        self.la_ag_id_factura2 = ttk.Label(self.lf_ag_factura, text="id_factura*")
+        self.la_ag_id_factura2.grid(row=1, column=1)
+
+        self.id_factura2 = StringVar()
+        self.en_ag_id_factura2 = ttk.Entry(self.lf_ag_factura, textvariable=self.id_factura2)
+        self.en_ag_id_factura2.grid(row=1, column=2)
+
+        self.la_ag_placas2 = ttk.Label(self.lf_ag_factura, text="Placas*")
+        self.la_ag_placas2.grid(row=2, column=1)
+
+        self.ag_placas2 = StringVar()
+        self.en_ag_placas2 = ttk.Entry(self.lf_ag_factura, textvariable=self.ag_placas2)
+        self.en_ag_placas2.grid(row=2, column=2)
+
+        self.la_ag_costo = ttk.Label(self.lf_ag_factura, text="Costo total")
+        self.la_ag_costo.grid(row=1, column=3)
+
+        self.ag_costo = StringVar()
+        self.en_ag_costo = ttk.Entry(self.lf_ag_factura, textvariable=self.ag_costo)
+        self.en_ag_costo.grid(row=1, column=4)
+
+        self.bo_ag_factura = ttk.Button(self.lf_ag_factura, width=18,
+                                        text="Agregar factura")
+        self.bo_ag_factura.grid(row=1, column=5)
+
+        self.bo_importar_facturas = ttk.Button(self.lf_ag_factura, width=18,
+                                        text="Importar facturas")
+        self.bo_importar_facturas.grid(row=2, column=5)
+
+        for child in self.lf_ag_factura.winfo_children():
             child.grid_configure(padx=5, pady=5)
 
         # Padding of elements in agregar / importar frame

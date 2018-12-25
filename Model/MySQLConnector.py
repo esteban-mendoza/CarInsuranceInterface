@@ -22,8 +22,8 @@ class MySQLConnector:
             else:
                 print(err)
 
-    def query(self, query, args):
-        self.cursor.execute(query, args)
+    def query(self, query):
+        self.cursor.execute(query)
 
     def insert(self, query, args):
         self.cursor.execute(query, args)
@@ -47,20 +47,20 @@ if __name__ == '__main__':
     cnx = MySQLConnector()
 
     cnx.query("SELECT * FROM alumnos")
-    print(cnx.cur)
+    print(cnx.cursor)
 
-    for row in cnx.cur:
+    for row in cnx.cursor:
         print(row)
 
-    alumno = {
-        'cuenta': 16,
-        'nombre': 'Esteban',
-        'id_carrera': 4
-    }
-    query = ("INSERT INTO ALUMNOS "
-             "(cuenta, nombre, id_carrera) "
-             "VALUES (%(cuenta)s, %(nombre)s, %(id_carrera)s)")
-
-    cnx.insert(query, alumno)
+    # alumno = {
+    #     'cuenta': 16,
+    #     'nombre': 'Esteban',
+    #     'id_carrera': 4
+    # }
+    # query = ("INSERT INTO ALUMNOS "
+    #          "(cuenta, nombre, id_carrera) "
+    #          "VALUES (%(cuenta)s, %(nombre)s, %(id_carrera)s)")
+    #
+    # cnx.insert(query, alumno)
 
     cnx.close()

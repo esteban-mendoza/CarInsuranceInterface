@@ -12,7 +12,7 @@ class MySQLConnector:
             self.connection = MySQLConnection(**config)
             print("Connection created")
 
-            self.cur = self.connection.cursor()
+            self.cursor = self.connection.cursor()
 
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
@@ -22,23 +22,23 @@ class MySQLConnector:
             else:
                 print(err)
 
-    def query(self, query):
-        self.cur.execute(query)
+    def query(self, query, args):
+        self.cursor.execute(query, args)
 
-    def insert(self, query):
-        self.cur.execute(query)
-        self.cur.commit()
+    def insert(self, query, args):
+        self.cursor.execute(query, args)
+        self.connection.commit()
 
     def update(self, query):
-        self.cur.execute(query)
-        self.cur.commit()
+        self.cursor.execute(query)
+        self.connection.commit()
 
     def delete(self, query):
-        self.cur.execute(query)
-        self.cur.commit()
+        self.cursor.execute(query)
+        self.connection.commit()
 
-    def __del__(self):
-        self.cur.close()
+    def close(self):
+        self.cursor.close()
         self.connection.close()
         print("Connection closed")
 
@@ -52,4 +52,15 @@ if __name__ == '__main__':
     for row in cnx.cur:
         print(row)
 
-    del cnx
+    alumno = {
+        'cuenta': 16,
+        'nombre': 'Esteban',
+        'id_carrera': 4
+    }
+    query = ("INSERT INTO ALUMNOS "
+             "(cuenta, nombre, id_carrera) "
+             "VALUES (%(cuenta)s, %(nombre)s, %(id_carrera)s)")
+
+    cnx.insert(query, alumno)
+
+    cnx.close()

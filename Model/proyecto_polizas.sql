@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS Vehiculo (
 
 # Tabla Factura
 CREATE TABLE IF NOT EXISTS Factura (
-	id_factura INT NOT NULL,
+	id_factura INT NOT NULL AUTO_INCREMENT,
 	placas VARCHAR(10) NOT NULL,
 	costo_total FLOAT NOT NULL,
 	PRIMARY KEY (id_factura),

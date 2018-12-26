@@ -72,7 +72,7 @@ class Controller:
         self.connection.query(query)
 
         update_statement = ("UPDATE vehiculo "
-                            "SET id_factura = %s "
+                            "SET id_factura = COALESCE(id_factura, %s) "
                             "WHERE placas = %s")
 
         for id_factura in self.connection.cursor:

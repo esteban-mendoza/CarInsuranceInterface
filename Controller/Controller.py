@@ -79,4 +79,37 @@ class Controller:
             self.connection.update(update_statement, (id_factura[0], placas))
 
     def gen_poliza(self, **data):
-        pass
+        costo_factura = self.get_costo_factura(data['id_factura'])
+
+        prima = costo_factura * 0.85
+        data['prima_asegurada'] = data.get('prima_asegurada', prima)
+
+        costo_seguro = costo_factura * (6.67/12)/100
+        data['costo_total'] = data.get('costo_total', costo_seguro)
+
+        fecha_apertura = date.today().strftime("%Y-%m-%d")
+        data['fecha_apertura'] = data.get('fecha_apertura', fecha_apertura)
+
+        fecha_vencimiento = datetime.strptime(data['fecha_apertura'], "%Y-%m-%d") + timedelta(days=365)
+        fecha_vencimiento = fecha_vencimiento.strftime("%Y-%m-%d")
+        data['fecha_vencimiento'] = data.get('fecha_vencimiento', fecha_vencimiento)
+
+        fields, values = self.str_helper(data)
+
+        query = ("INSERT INTO poliza "
+                 "(" + fields + ") "
+                 "VALUES (" + values + ")")
+        try:
+            self.connection.insert(query)
+        except Exception as e:
+            logging.error(traceback.format_exc())
+
+
+
+    def get_costo_factura(self, id_factura):
+        query = ("SELECT costo_total FROM factura "
+                 "WHERE id_factura = %s")
+
+        self.connection.query(query, (id_factura,))
+
+        return self.connection.cursor.fetchone()[0]

@@ -22,8 +22,11 @@ class MySQLConnector:
             else:
                 print(err)
 
-    def query(self, query):
-        self.cursor.execute(query)
+    def query(self, query, args=None):
+        if args is None:
+            self.cursor.execute(query)
+        else:
+            self.cursor.execute(query, args)
 
     def insert(self, query):
         self.cursor.execute(query)

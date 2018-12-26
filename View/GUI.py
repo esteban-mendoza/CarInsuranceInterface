@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from View.Datepicker import Datepicker
+from Controller.Controller import Controller
 
 """
 Autor: Jorge Esteban Mendoza Ortiz (418002863)
@@ -11,6 +12,8 @@ Email: esteban.mendoza@ciencias.unam.mx
 class GUI(ttk.Frame):
 
     def __init__(self, master):
+        self.control = Controller()
+
         # Main frame
         super().__init__(master)
         super().grid(row=0, column=0, sticky=(N, W, E, S))
@@ -249,13 +252,16 @@ class GUI(ttk.Frame):
 
         # Agregar / importar frame widgets
         self.la_instruccion = ttk.Label(self.fr_agregar,
-                                        text="NOTA: Los campos marcados con asteriscos no pueden estar vacíos.")
+                                        text="NOTA: \n"
+                                             "Los campos marcados con * no pueden estar vacíos.\n"
+                                             "Los campos marcados con + pueden dejarse en blanco y se generan "
+                                             "automáticamente.")
         self.la_instruccion.grid(row=0, column=0, pady=20)
 
         self.lf_ag_cliente = ttk.Labelframe(self.fr_agregar, text="Cliente")
         self.lf_ag_cliente.grid(row=1, column=0, rowspan=3, columnspan=8, sticky=(E, W))
 
-        self.la_ag_id_cliente = ttk.Label(self.lf_ag_cliente, text="id_cliente*")
+        self.la_ag_id_cliente = ttk.Label(self.lf_ag_cliente, text="id_cliente+")
         self.la_ag_id_cliente.grid(row=1, column=1)
 
         self.ag_id_cliente = StringVar()
@@ -277,7 +283,7 @@ class GUI(ttk.Frame):
         self.en_ag_direccion.grid(row=2, column=2, columnspan=4)
 
         self.bo_ag_cliente = ttk.Button(self.lf_ag_cliente, width=18,
-                                        text="Agregar cliente")
+                                        text="Agregar cliente", command=self.insert_cliente)
         self.bo_ag_cliente.grid(row=1, column=6)
 
         self.bo_importar_clientes = ttk.Button(self.lf_ag_cliente, width=18,
@@ -297,12 +303,12 @@ class GUI(ttk.Frame):
         self.en_ag_placas = ttk.Entry(self.lf_ag_vehiculo, textvariable=self.ag_placas)
         self.en_ag_placas.grid(row=1, column=2)
 
-        self.la_ag_id_factura = ttk.Label(self.lf_ag_vehiculo, text="id_factura")
-        self.la_ag_id_factura.grid(row=2, column=1)
-
-        self.ag_id_factura = StringVar()
-        self.en_ag_id_factura = ttk.Entry(self.lf_ag_vehiculo, textvariable=self.ag_id_factura)
-        self.en_ag_id_factura.grid(row=2, column=2)
+        # self.la_ag_id_factura = ttk.Label(self.lf_ag_vehiculo, text="id_factura")
+        # self.la_ag_id_factura.grid(row=2, column=1)
+        #
+        # self.ag_id_factura = StringVar()
+        # self.en_ag_id_factura = ttk.Entry(self.lf_ag_vehiculo, textvariable=self.ag_id_factura)
+        # self.en_ag_id_factura.grid(row=2, column=2)
 
         self.la_ag_marca = ttk.Label(self.lf_ag_vehiculo, text="Marca")
         self.la_ag_marca.grid(row=1, column=3)
@@ -319,7 +325,7 @@ class GUI(ttk.Frame):
         self.en_ag_modelo.grid(row=2, column=4)
 
         self.bo_ag_vehiculo = ttk.Button(self.lf_ag_vehiculo, width=18,
-                                         text="Agregar vehículo")
+                                         text="Agregar vehículo", command=self.insert_vehiculo)
         self.bo_ag_vehiculo.grid(row=1, column=6)
 
         self.bo_importar_vehiculo = ttk.Button(self.lf_ag_vehiculo, width=18,
@@ -332,12 +338,12 @@ class GUI(ttk.Frame):
         self.lf_ag_factura = ttk.Labelframe(self.fr_agregar, text="Factura")
         self.lf_ag_factura.grid(row=8, column=0, rowspan=3, columnspan=8, sticky=(E, W))
 
-        self.la_ag_id_factura2 = ttk.Label(self.lf_ag_factura, text="id_factura*")
-        self.la_ag_id_factura2.grid(row=1, column=1)
+        self.la_ag_id_factura = ttk.Label(self.lf_ag_factura, text="id_factura+")
+        self.la_ag_id_factura.grid(row=1, column=1)
 
-        self.id_factura2 = StringVar()
-        self.en_ag_id_factura2 = ttk.Entry(self.lf_ag_factura, textvariable=self.id_factura2)
-        self.en_ag_id_factura2.grid(row=1, column=2)
+        self.ag_id_factura = StringVar()
+        self.en_ag_id_factura = ttk.Entry(self.lf_ag_factura, textvariable=self.ag_id_factura)
+        self.en_ag_id_factura.grid(row=1, column=2)
 
         self.la_ag_placas2 = ttk.Label(self.lf_ag_factura, text="Placas*")
         self.la_ag_placas2.grid(row=2, column=1)
@@ -354,7 +360,7 @@ class GUI(ttk.Frame):
         self.en_ag_costo.grid(row=1, column=4)
 
         self.bo_ag_factura = ttk.Button(self.lf_ag_factura, width=18,
-                                        text="Agregar factura")
+                                        text="Agregar factura", command=self.insert_factura)
         self.bo_ag_factura.grid(row=1, column=5)
 
         self.bo_importar_facturas = ttk.Button(self.lf_ag_factura, width=18,
@@ -367,6 +373,38 @@ class GUI(ttk.Frame):
         # Padding of elements in agregar / importar frame
         for child in self.fr_agregar.winfo_children():
             child.grid_configure(padx=5, pady=5)
+
+    def insert_cliente(self):
+        data = dict()
+        if self.ag_id_cliente.get():
+            data['id_cliente'] = int(self.ag_id_cliente.get())
+        if self.ag_nombre.get():
+            data['nombre'] = self.ag_nombre.get()
+        if self.ag_direccion.get():
+            data['direccion'] = self.ag_direccion.get()
+        self.control.insert_cliente(**data)
+
+    def insert_vehiculo(self):
+        data = dict()
+        if self.ag_placas.get():
+            data['placas'] = self.ag_placas.get()
+        # if self.ag_id_factura.get():
+        #     data['id_factura'] = int(self.ag_id_factura.get())
+        if self.ag_marca.get():
+            data['marca'] = self.ag_marca.get()
+        if self.ag_modelo.get():
+            data['modelo'] = self.ag_modelo.get()
+        self.control.insert_vehiculo(**data)
+
+    def insert_factura(self):
+        data = dict()
+        if self.ag_id_factura.get():
+            data['id_factura'] = int(self.ag_id_factura.get())
+        if self.ag_placas2.get():
+            data['placas'] = self.ag_placas2.get()
+        if self.ag_costo.get():
+            data['costo_total'] = float(self.ag_costo.get())
+        self.control.insert_factura(**data)
 
 
 if __name__ == '__main__':

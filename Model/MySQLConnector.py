@@ -25,12 +25,12 @@ class MySQLConnector:
     def query(self, query):
         self.cursor.execute(query)
 
-    def insert(self, query, args):
-        self.cursor.execute(query, args)
+    def insert(self, query):
+        self.cursor.execute(query)
         self.connection.commit()
 
-    def update(self, query):
-        self.cursor.execute(query)
+    def update(self, query, args):
+        self.cursor.execute(query, args)
         self.connection.commit()
 
     def delete(self, query):

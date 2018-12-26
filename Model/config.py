@@ -4,5 +4,5 @@ config = {
     'user': 'root',
     'password': 'password',
     'host': 'localhost',
-    'database': 'fciencias'
+    'database': 'proyecto'
 }

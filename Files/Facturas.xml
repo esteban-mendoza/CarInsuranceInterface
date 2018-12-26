@@ -3,15 +3,19 @@
 
 <facturas>
     <factura>
+        <placas>369TYU</placas>
         <costo_total>50000</costo_total>
     </factura>
     <factura>
+        <placas>358FGV</placas>
         <costo_total>130000</costo_total>
     </factura>
     <factura>
+        <placas>452TGH</placas>
         <costo_total>250000</costo_total>
     </factura>
     <factura>
+        <placas>485JOP</placas>
         <costo_total>48900</costo_total>
     </factura>
 </facturas>

@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from View.Datepicker import Datepicker
 from Controller.Controller import Controller
+from tkinter.filedialog import askopenfilename
 
 """
 Autor: Jorge Esteban Mendoza Ortiz (418002863)
@@ -286,7 +287,7 @@ class GUI(ttk.Frame):
         self.bo_ag_cliente.grid(row=1, column=6)
 
         self.bo_importar_clientes = ttk.Button(self.lf_ag_cliente, width=18,
-                                               text="Importar clientes")
+                                               text="Importar clientes", command=self.importar_clientes)
         self.bo_importar_clientes.grid(row=2, column=6)
 
         for child in self.lf_ag_cliente.winfo_children():
@@ -302,12 +303,12 @@ class GUI(ttk.Frame):
         self.en_ag_placas = ttk.Entry(self.lf_ag_vehiculo, textvariable=self.ag_placas)
         self.en_ag_placas.grid(row=1, column=2)
 
-        # self.la_ag_id_factura = ttk.Label(self.lf_ag_vehiculo, text="id_factura")
-        # self.la_ag_id_factura.grid(row=2, column=1)
-        #
-        # self.ag_id_factura = StringVar()
-        # self.en_ag_id_factura = ttk.Entry(self.lf_ag_vehiculo, textvariable=self.ag_id_factura)
-        # self.en_ag_id_factura.grid(row=2, column=2)
+        self.la_ag_id_factura = ttk.Label(self.lf_ag_vehiculo, text="id_factura")
+        self.la_ag_id_factura.grid(row=2, column=1)
+
+        self.ag_id_factura = StringVar()
+        self.en_ag_id_factura = ttk.Entry(self.lf_ag_vehiculo, textvariable=self.ag_id_factura)
+        self.en_ag_id_factura.grid(row=2, column=2)
 
         self.la_ag_marca = ttk.Label(self.lf_ag_vehiculo, text="Marca")
         self.la_ag_marca.grid(row=1, column=3)
@@ -337,12 +338,12 @@ class GUI(ttk.Frame):
         self.lf_ag_factura = ttk.Labelframe(self.fr_agregar, text="Factura")
         self.lf_ag_factura.grid(row=10, column=0, rowspan=3, columnspan=8, sticky=(E, W))
 
-        self.la_ag_id_factura = ttk.Label(self.lf_ag_factura, text="id_factura+")
-        self.la_ag_id_factura.grid(row=1, column=1)
+        self.la_ag_id_factura2 = ttk.Label(self.lf_ag_factura, text="id_factura+")
+        self.la_ag_id_factura2.grid(row=1, column=1)
 
-        self.ag_id_factura = StringVar()
-        self.en_ag_id_factura = ttk.Entry(self.lf_ag_factura, textvariable=self.ag_id_factura)
-        self.en_ag_id_factura.grid(row=1, column=2)
+        self.ag_id_factura2 = StringVar()
+        self.en_ag_id_factura2 = ttk.Entry(self.lf_ag_factura, textvariable=self.ag_id_factura2)
+        self.en_ag_id_factura2.grid(row=1, column=2)
 
         self.la_ag_placas2 = ttk.Label(self.lf_ag_factura, text="Placas*")
         self.la_ag_placas2.grid(row=2, column=1)
@@ -351,7 +352,7 @@ class GUI(ttk.Frame):
         self.en_ag_placas2 = ttk.Entry(self.lf_ag_factura, textvariable=self.ag_placas2)
         self.en_ag_placas2.grid(row=2, column=2)
 
-        self.la_ag_costo = ttk.Label(self.lf_ag_factura, text="Costo total")
+        self.la_ag_costo = ttk.Label(self.lf_ag_factura, text="Costo total*")
         self.la_ag_costo.grid(row=1, column=3)
 
         self.ag_costo = StringVar()
@@ -379,19 +380,19 @@ class GUI(ttk.Frame):
         self.en_ag_id_cliente2 = ttk.Entry(self.lf_ag_poliza, textvariable=self.ag_id_cliente2)
         self.en_ag_id_cliente2.grid(row=1, column=2)
 
-        self.la_ag_id_factura2 = ttk.Label(self.lf_ag_poliza, text="id_factura*")
-        self.la_ag_id_factura2.grid(row=2, column=1)
+        self.la_ag_id_factura3 = ttk.Label(self.lf_ag_poliza, text="id_factura*")
+        self.la_ag_id_factura3.grid(row=2, column=1)
 
-        self.ag_id_factura2 = StringVar()
-        self.en_ag_id_factura2 = ttk.Entry(self.lf_ag_poliza, textvariable=self.ag_id_factura2)
-        self.en_ag_id_factura2.grid(row=2, column=2)
+        self.ag_id_factura3 = StringVar()
+        self.en_ag_id_factura3 = ttk.Entry(self.lf_ag_poliza, textvariable=self.ag_id_factura3)
+        self.en_ag_id_factura3.grid(row=2, column=2)
 
-        self.la_ag_costo = ttk.Label(self.lf_ag_poliza, text="Costo total+")
-        self.la_ag_costo.grid(row=1, column=3)
+        self.la_ag_costo_poliza = ttk.Label(self.lf_ag_poliza, text="Costo total+")
+        self.la_ag_costo_poliza.grid(row=1, column=3)
 
-        self.ag_costo = StringVar()
-        self.en_ag_costo = ttk.Entry(self.lf_ag_poliza, textvariable=self.ag_costo)
-        self.en_ag_costo.grid(row=1, column=4)
+        self.ag_costo_poliza = StringVar()
+        self.en_ag_costo_poliza = ttk.Entry(self.lf_ag_poliza, textvariable=self.ag_costo_poliza)
+        self.en_ag_costo_poliza.grid(row=1, column=4)
 
         self.la_ag_prima = ttk.Label(self.lf_ag_poliza, text="Prima asegurada+")
         self.la_ag_prima.grid(row=2, column=3)
@@ -439,8 +440,8 @@ class GUI(ttk.Frame):
         data = dict()
         if self.ag_placas.get():
             data['placas'] = self.ag_placas.get()
-        # if self.ag_id_factura.get():
-        #     data['id_factura'] = int(self.ag_id_factura.get())
+        if self.ag_id_factura.get():
+            data['id_factura'] = int(self.ag_id_factura.get())
         if self.ag_marca.get():
             data['marca'] = self.ag_marca.get()
         if self.ag_modelo.get():
@@ -449,8 +450,8 @@ class GUI(ttk.Frame):
 
     def insert_factura(self):
         data = dict()
-        if self.ag_id_factura.get():
-            data['id_factura'] = int(self.ag_id_factura.get())
+        if self.ag_id_factura2.get():
+            data['id_factura'] = int(self.ag_id_factura2.get())
         if self.ag_placas2.get():
             data['placas'] = self.ag_placas2.get()
         if self.ag_costo.get():
@@ -461,17 +462,26 @@ class GUI(ttk.Frame):
         data = dict()
         if self.ag_id_cliente2.get():
             data['id_cliente'] = int(self.ag_id_cliente2.get())
-        if self.ag_id_factura2.get():
-            data['id_factura'] = int(self.ag_id_factura2.get())
+        if self.ag_id_factura3.get():
+            data['id_factura'] = int(self.ag_id_factura3.get())
         if self.ag_prima.get():
             data['prima_asegurada'] = float(self.ag_prima.get())
-        if self.ag_costo.get():
-            data['costo_total'] = float(self.ag_costo.get())
+        if self.ag_costo_poliza.get():
+            data['costo_total'] = float(self.ag_costo_poliza.get())
         if self.ag_apertura.get():
             data['fecha_apertura'] = self.ag_apertura.get()
         if self.ag_vencimiento.get():
             data['fecha_vencimiento'] = self.ag_vencimiento.get()
         self.control.gen_poliza(**data)
+
+    def importar_clientes(self):
+        path = askopenfilename()
+
+    def importar_vehiculos(self):
+        path = askopenfilename()
+
+    def importar_facturas(self):
+        path = askopenfilename()
 
 
 if __name__ == '__main__':

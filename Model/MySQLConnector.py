@@ -47,6 +47,7 @@ class MySQLConnector:
 
 
 if __name__ == '__main__':
+    # Example
     cnx = MySQLConnector()
 
     cnx.query("SELECT * FROM alumnos")

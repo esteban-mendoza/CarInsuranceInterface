@@ -163,16 +163,16 @@ class GUI(ttk.Frame):
         self.en_costo_seguro = ttk.Entry(self.lf_poliza,  textvariable=self.costo_seguro)
         self.en_costo_seguro.grid(row=4, column=5)
 
-        self.val_poliza = BooleanVar()
-        self.ch_poliza = ttk.Checkbutton(self.lf_poliza, variable=self.val_poliza)
-        self.ch_poliza.grid(row=5, column=3)
+        self.val_prima = BooleanVar()
+        self.ch_prima = ttk.Checkbutton(self.lf_poliza, variable=self.val_prima)
+        self.ch_prima.grid(row=5, column=3)
 
-        self.la_poliza = ttk.Label(self.lf_poliza, text="Póliza")
-        self.la_poliza.grid(row=5, column=4)
+        self.la_prima = ttk.Label(self.lf_poliza, text="Prima asegurada")
+        self.la_prima.grid(row=5, column=4)
 
-        self.poliza = StringVar()
-        self.en_poliza = ttk.Entry(self.lf_poliza,  textvariable=self.poliza)
-        self.en_poliza.grid(row=5, column=5)
+        self.prima = StringVar()
+        self.en_prima = ttk.Entry(self.lf_poliza,  textvariable=self.prima)
+        self.en_prima.grid(row=5, column=5)
 
         self.val_apertura = BooleanVar()
         self.ch_apertura = ttk.Checkbutton(self.lf_poliza, variable=self.val_apertura)
@@ -238,13 +238,12 @@ class GUI(ttk.Frame):
             child.grid_configure(padx=5, pady=5)
 
         # Ayuda frame widgets
-        self.la_autor = ttk.Label(self.fr_ayuda,
-                                  text="Autor: Jorge Esteban Mendoza Ortiz (418002863)")
-        self.la_autor.grid(row=0, column=0)
-
-        self.la_email = ttk.Label(self.fr_ayuda,
-                                  text="Email: esteban.mendoza@ciencias.unam.mx")
-        self.la_email.grid(row=1, column=0)
+        self.la_ayuda = ttk.Label(self.fr_ayuda,
+                                  text="Licenciatura en Matemáticas Aplicadas\n\n"
+                                       "Proyecto final para la materia de Manejo de Datos.\n"
+                                       "Profesor: M. en C. Miguel Ángel Pérez León\n\n"
+                                       "Autor: Jorge Esteban Mendoza Ortiz (418002863)\n")
+        self.la_ayuda.grid(row=0, column=0)
 
         # Padding of elements in ayuda frame
         for child in self.fr_ayuda.winfo_children():
@@ -259,7 +258,7 @@ class GUI(ttk.Frame):
         self.la_instruccion.grid(row=0, column=0, pady=20)
 
         self.lf_ag_cliente = ttk.Labelframe(self.fr_agregar, text="Cliente")
-        self.lf_ag_cliente.grid(row=1, column=0, rowspan=3, columnspan=8, sticky=(E, W))
+        self.lf_ag_cliente.grid(row=4, column=0, rowspan=3, columnspan=8, sticky=(E, W))
 
         self.la_ag_id_cliente = ttk.Label(self.lf_ag_cliente, text="id_cliente+")
         self.la_ag_id_cliente.grid(row=1, column=1)
@@ -294,7 +293,7 @@ class GUI(ttk.Frame):
             child.grid_configure(padx=5, pady=5)
 
         self.lf_ag_vehiculo = ttk.Labelframe(self.fr_agregar, text="Vehículo")
-        self.lf_ag_vehiculo.grid(row=5, column=0, rowspan=3, columnspan=8, sticky=(E, W))
+        self.lf_ag_vehiculo.grid(row=7, column=0, rowspan=3, columnspan=8, sticky=(E, W))
 
         self.la_ag_placas = ttk.Label(self.lf_ag_vehiculo, text="Placas*")
         self.la_ag_placas.grid(row=1, column=1)
@@ -336,7 +335,7 @@ class GUI(ttk.Frame):
             child.grid_configure(padx=5, pady=5)
 
         self.lf_ag_factura = ttk.Labelframe(self.fr_agregar, text="Factura")
-        self.lf_ag_factura.grid(row=8, column=0, rowspan=3, columnspan=8, sticky=(E, W))
+        self.lf_ag_factura.grid(row=10, column=0, rowspan=3, columnspan=8, sticky=(E, W))
 
         self.la_ag_id_factura = ttk.Label(self.lf_ag_factura, text="id_factura+")
         self.la_ag_id_factura.grid(row=1, column=1)
@@ -364,10 +363,66 @@ class GUI(ttk.Frame):
         self.bo_ag_factura.grid(row=1, column=5)
 
         self.bo_importar_facturas = ttk.Button(self.lf_ag_factura, width=18,
-                                        text="Importar facturas")
+                                               text="Importar facturas")
         self.bo_importar_facturas.grid(row=2, column=5)
 
         for child in self.lf_ag_factura.winfo_children():
+            child.grid_configure(padx=5, pady=5)
+
+        self.lf_ag_poliza = ttk.Labelframe(self.fr_agregar, text="Póliza")
+        self.lf_ag_poliza.grid(row=1, column=0, rowspan=3, columnspan=8, sticky=(E, W))
+
+        self.la_ag_id_cliente2 = ttk.Label(self.lf_ag_poliza, text="id_cliente*")
+        self.la_ag_id_cliente2.grid(row=1, column=1)
+
+        self.ag_id_cliente2 = StringVar()
+        self.en_ag_id_cliente2 = ttk.Entry(self.lf_ag_poliza, textvariable=self.ag_id_cliente2)
+        self.en_ag_id_cliente2.grid(row=1, column=2)
+
+        self.la_ag_id_factura2 = ttk.Label(self.lf_ag_poliza, text="id_factura*")
+        self.la_ag_id_factura2.grid(row=2, column=1)
+
+        self.ag_id_factura2 = StringVar()
+        self.en_ag_id_factura2 = ttk.Entry(self.lf_ag_poliza, textvariable=self.ag_id_factura2)
+        self.en_ag_id_factura2.grid(row=2, column=2)
+
+        self.la_ag_costo = ttk.Label(self.lf_ag_poliza, text="Costo total+")
+        self.la_ag_costo.grid(row=1, column=3)
+
+        self.ag_costo = StringVar()
+        self.en_ag_costo = ttk.Entry(self.lf_ag_poliza, textvariable=self.ag_costo)
+        self.en_ag_costo.grid(row=1, column=4)
+
+        self.la_ag_prima = ttk.Label(self.lf_ag_poliza, text="Prima asegurada+")
+        self.la_ag_prima.grid(row=2, column=3)
+
+        self.ag_prima = StringVar()
+        self.en_ag_prima = ttk.Entry(self.lf_ag_poliza, textvariable=self.ag_prima)
+        self.en_ag_prima.grid(row=2, column=4)
+
+        self.la_ag_apertura = ttk.Label(self.lf_ag_poliza, text="Fecha de apertura+")
+        self.la_ag_apertura.grid(row=1, column=5)
+
+        self.ag_apertura = StringVar()
+        self.en_ag_apertura = Datepicker(self.lf_ag_poliza, datevar=self.ag_apertura)
+        self.en_ag_apertura.grid(row=1, column=6)
+
+        self.la_ag_vencimiento = ttk.Label(self.lf_ag_poliza, text="Fecha de vencimiento+")
+        self.la_ag_vencimiento.grid(row=2, column=5)
+
+        self.ag_vencimiento = StringVar()
+        self.en_ag_vencimiento = Datepicker(self.lf_ag_poliza, datevar=self.ag_vencimiento)
+        self.en_ag_vencimiento .grid(row=2, column=6)
+
+        self.bo_gen_poliza = ttk.Button(self.lf_ag_poliza, width=18,
+                                        text="Generar póliza", command=self.gen_poliza)
+        self.bo_gen_poliza.grid(row=1, column=7)
+
+        self.bo_gen_polizas = ttk.Button(self.lf_ag_poliza, width=18,
+                                         text="Generar pólizas")
+        self.bo_gen_polizas.grid(row=2, column=7)
+
+        for child in self.lf_ag_poliza.winfo_children():
             child.grid_configure(padx=5, pady=5)
 
         # Padding of elements in agregar / importar frame
@@ -405,6 +460,22 @@ class GUI(ttk.Frame):
         if self.ag_costo.get():
             data['costo_total'] = float(self.ag_costo.get())
         self.control.insert_factura(**data)
+
+    def gen_poliza(self):
+        data = dict()
+        if self.ag_id_cliente2.get():
+            data['id_cliente'] = int(self.ag_id_cliente2.get())
+        if self.ag_id_factura2.get():
+            data['id_factura'] = int(self.ag_id_factura2.get())
+        if self.ag_prima.get():
+            data['prima_asegurada'] = float(self.ag_prima.get())
+        if self.ag_costo.get():
+            data['costo_total'] = float(self.ag_costo.get())
+        if self.ag_apertura.get():
+            data['fecha_apertura'] = self.ag_apertura.get()
+        if self.ag_vencimiento.get():
+            data['fecha_vencimiento'] = self.ag_vencimiento.get()
+        self.control.gen_poliza(**data)
 
 
 if __name__ == '__main__':

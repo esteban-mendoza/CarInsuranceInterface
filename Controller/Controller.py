@@ -77,3 +77,6 @@ class Controller:
 
         for id_factura in self.connection.cursor:
             self.connection.update(update_statement, (id_factura[0], placas))
+
+    def gen_poliza(self, **data):
+        pass

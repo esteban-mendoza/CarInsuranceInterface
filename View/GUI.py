@@ -418,10 +418,6 @@ class GUI(ttk.Frame):
                                         text="Generar póliza", command=self.gen_poliza)
         self.bo_gen_poliza.grid(row=1, column=7)
 
-        self.bo_gen_polizas = ttk.Button(self.lf_ag_poliza, width=18,
-                                         text="Generar pólizas")
-        self.bo_gen_polizas.grid(row=2, column=7)
-
         for child in self.lf_ag_poliza.winfo_children():
             child.grid_configure(padx=5, pady=5)
 

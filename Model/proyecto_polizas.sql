@@ -5,7 +5,7 @@ USE PROYECTO;
 # Tabla Cliente
 CREATE TABLE IF NOT EXISTS Cliente (
 	id_cliente INT NOT NULL AUTO_INCREMENT,
-	nombre VARCHAR(60) NOT NULL,
+	nombre VARCHAR(60),
 	direccion VARCHAR(255),
 	PRIMARY KEY (id_cliente));
 

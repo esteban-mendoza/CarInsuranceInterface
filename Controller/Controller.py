@@ -104,8 +104,6 @@ class Controller:
         except Exception as e:
             logging.error(traceback.format_exc())
 
-
-
     def get_costo_factura(self, id_factura):
         query = ("SELECT costo_total FROM factura "
                  "WHERE id_factura = %s")

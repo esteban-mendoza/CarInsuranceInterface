@@ -476,12 +476,15 @@ class GUI(ttk.Frame):
 
     def importar_clientes(self):
         path = askopenfilename()
+        self.control.insert_clientes(path)
 
     def importar_vehiculos(self):
         path = askopenfilename()
+        self.control.insert_vehiculos(path)
 
     def importar_facturas(self):
         path = askopenfilename()
+        self.control.insert_facturas(path)
 
 
 if __name__ == '__main__':

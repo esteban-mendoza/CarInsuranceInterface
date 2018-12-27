@@ -42,6 +42,9 @@ class Controller:
         except Exception as e:
             logging.error(traceback.format_exc())
 
+    def insert_clientes(self, path):
+        print(path)
+
     def insert_vehiculo(self, **data):
         fields, values = self.str_helper(data)
 
@@ -52,6 +55,9 @@ class Controller:
             self.connection.insert(query)
         except Exception as e:
             logging.error(traceback.format_exc())
+
+    def insert_vehiculos(self, path):
+        print(path)
 
     def insert_factura(self, **data):
         fields, values = self.str_helper(data)
@@ -64,6 +70,9 @@ class Controller:
             self.update_vehiculo(data['placas'])
         except Exception as e:
             logging.error(traceback.format_exc())
+
+    def insert_facturas(self, path):
+        pass
 
     def update_vehiculo(self, placas):
         query = ("SELECT id_factura FROM factura "

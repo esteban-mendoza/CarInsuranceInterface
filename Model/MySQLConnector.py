@@ -5,7 +5,6 @@ import mysql.connector
 
 
 class MySQLConnector:
-    connection = None
 
     def __init__(self):
         try:
@@ -29,15 +28,15 @@ class MySQLConnector:
             self.cursor.execute(query, args)
 
     def insert(self, query):
-        self.cursor.execute(query)
+        self.query(query)
         self.connection.commit()
 
     def update(self, query, args):
-        self.cursor.execute(query, args)
+        self.query(query, args)
         self.connection.commit()
 
     def delete(self, query):
-        self.cursor.execute(query)
+        self.query(query)
         self.connection.commit()
 
     def close(self):
@@ -50,21 +49,10 @@ if __name__ == '__main__':
     # Example
     cnx = MySQLConnector()
 
-    cnx.query("SELECT * FROM alumnos")
+    cnx.query("SELECT * FROM cliente")
     print(cnx.cursor)
 
     for row in cnx.cursor:
         print(row)
-
-    # alumno = {
-    #     'cuenta': 16,
-    #     'nombre': 'Esteban',
-    #     'id_carrera': 4
-    # }
-    # query = ("INSERT INTO ALUMNOS "
-    #          "(cuenta, nombre, id_carrera) "
-    #          "VALUES (%(cuenta)s, %(nombre)s, %(id_carrera)s)")
-    #
-    # cnx.insert(query, alumno)
 
     cnx.close()

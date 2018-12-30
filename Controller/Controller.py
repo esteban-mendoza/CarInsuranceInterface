@@ -76,9 +76,9 @@ class Controller:
 
     def update_vehiculo(self, placas):
         query = ("SELECT id_factura FROM factura "
-                 "WHERE placas=\"{}\"".format(placas))
+                 "WHERE placas = %s")
 
-        self.connection.query(query)
+        self.connection.query(query, (placas,))
 
         update_statement = ("UPDATE vehiculo "
                             "SET id_factura = COALESCE(id_factura, %s) "

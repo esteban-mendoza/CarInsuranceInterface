@@ -11,6 +11,7 @@ Email: esteban.mendoza@ciencias.unam.mx
 
 
 class GUI(ttk.Frame):
+    fields_current_query = dict()
 
     def __init__(self, master):
         self.control = Controller()
@@ -95,16 +96,16 @@ class GUI(ttk.Frame):
         self.en_id_factura = ttk.Entry(self.lf_factura,  textvariable=self.id_factura)
         self.en_id_factura.grid(row=1, column=8)
 
-        self.val_costo_auto = BooleanVar()
-        self.ch_costo_auto = ttk.Checkbutton(self.lf_factura, variable=self.val_costo_auto)
-        self.ch_costo_auto.grid(row=2, column=6)
+        self.val_costo_vehiculo = BooleanVar()
+        self.ch_costo_vehiculo = ttk.Checkbutton(self.lf_factura, variable=self.val_costo_vehiculo)
+        self.ch_costo_vehiculo.grid(row=2, column=6)
 
-        self.la_costo_auto = ttk.Label(self.lf_factura, text="Costo del\nautomóvil")
-        self.la_costo_auto.grid(row=2, column=7)
+        self.la_costo_vehiculo = ttk.Label(self.lf_factura, text="Costo del\nautomóvil")
+        self.la_costo_vehiculo.grid(row=2, column=7)
 
-        self.costo_auto = StringVar()
-        self.en_costo_auto = ttk.Entry(self.lf_factura,  textvariable=self.costo_auto)
-        self.en_costo_auto.grid(row=2, column=8)
+        self.costo_vehiculo = StringVar()
+        self.en_costo_vehiculo = ttk.Entry(self.lf_factura,  textvariable=self.costo_vehiculo)
+        self.en_costo_vehiculo.grid(row=2, column=8)
 
         for child in self.lf_factura.winfo_children():
             child.grid_configure(padx=5, pady=5)
@@ -164,51 +165,56 @@ class GUI(ttk.Frame):
         self.en_costo_seguro = ttk.Entry(self.lf_poliza,  textvariable=self.costo_seguro)
         self.en_costo_seguro.grid(row=4, column=5)
 
-        self.val_prima = BooleanVar()
-        self.ch_prima = ttk.Checkbutton(self.lf_poliza, variable=self.val_prima)
-        self.ch_prima.grid(row=5, column=3)
+        self.val_prima_asegurada = BooleanVar()
+        self.ch_prima_asegurada = ttk.Checkbutton(self.lf_poliza, variable=self.val_prima_asegurada)
+        self.ch_prima_asegurada.grid(row=5, column=3)
 
-        self.la_prima = ttk.Label(self.lf_poliza, text="Prima asegurada")
-        self.la_prima.grid(row=5, column=4)
+        self.la_prima_asegurada = ttk.Label(self.lf_poliza, text="Prima asegurada")
+        self.la_prima_asegurada.grid(row=5, column=4)
 
-        self.prima = StringVar()
-        self.en_prima = ttk.Entry(self.lf_poliza,  textvariable=self.prima)
-        self.en_prima.grid(row=5, column=5)
+        self.prima_asegurada = StringVar()
+        self.en_prima_asegurada = ttk.Entry(self.lf_poliza,  textvariable=self.prima_asegurada)
+        self.en_prima_asegurada.grid(row=5, column=5)
 
-        self.val_apertura = BooleanVar()
-        self.ch_apertura = ttk.Checkbutton(self.lf_poliza, variable=self.val_apertura)
-        self.ch_apertura.grid(row=4, column=6)
+        self.val_fecha_apertura = BooleanVar()
+        self.ch_fecha_apertura = ttk.Checkbutton(self.lf_poliza, variable=self.val_fecha_apertura)
+        self.ch_fecha_apertura.grid(row=4, column=6)
 
-        self.la_apertura = ttk.Label(self.lf_poliza, text="Fecha de\napertura")
-        self.la_apertura.grid(row=4, column=7)
+        self.la_fecha_apertura = ttk.Label(self.lf_poliza, text="Fecha de\napertura")
+        self.la_fecha_apertura.grid(row=4, column=7)
 
-        self.apertura = StringVar()
-        self.en_apertura = Datepicker(self.lf_poliza, datevar=self.apertura)
-        self.en_apertura.grid(row=4, column=8)
+        self.fecha_apertura = StringVar()
+        self.en_fecha_apertura = Datepicker(self.lf_poliza, datevar=self.fecha_apertura)
+        self.en_fecha_apertura.grid(row=4, column=8)
 
-        self.val_vencimiento = BooleanVar()
-        self.ch_vencimiento = ttk.Checkbutton(self.lf_poliza, variable=self.val_vencimiento)
-        self.ch_vencimiento.grid(row=5, column=6)
+        self.val_fecha_vencimiento = BooleanVar()
+        self.ch_fecha_vencimiento = ttk.Checkbutton(self.lf_poliza, variable=self.val_fecha_vencimiento)
+        self.ch_fecha_vencimiento.grid(row=5, column=6)
 
-        self.la_vencimiento = ttk.Label(self.lf_poliza, text="Fecha de\nvencimiento")
-        self.la_vencimiento.grid(row=5, column=7)
+        self.la_fecha_vencimiento = ttk.Label(self.lf_poliza, text="Fecha de\nvencimiento")
+        self.la_fecha_vencimiento.grid(row=5, column=7)
 
-        self.vencimiento = StringVar()
-        self.en_vencimiento = Datepicker(self.lf_poliza, datevar=self.vencimiento)
-        self.en_vencimiento.grid(row=5, column=8)
+        self.fecha_vencimiento = StringVar()
+        self.en_fecha_vencimiento = Datepicker(self.lf_poliza, datevar=self.fecha_vencimiento)
+        self.en_fecha_vencimiento.grid(row=5, column=8)
 
         for child in self.lf_poliza.winfo_children():
             child.grid_configure(padx=5, pady=5)
 
         # Table
-        self.tabla = ttk.Treeview(self.fr_consultas, selectmode=BROWSE)
-        self.tabla.grid(row=7, column=0, rowspan=7, columnspan=9, sticky=W+E+N+S)
+        self.fr_tabla = ttk.Frame(self.fr_consultas, width=900, height=180)
+        self.fr_tabla.grid(row=7, column=0, rowspan=8, columnspan=10)
+        self.fr_tabla.grid_propagate(0)
+
+        self.tabla = ttk.Treeview(self.fr_tabla, height=12, selectmode=BROWSE)
+        self.tabla.grid(row=7, column=0, sticky=N+S+W+E)
+        self.tabla.bind("<<TreeviewSelect>>", self.populate_fields)
 
         # Scroll bars
-        self.vscroll = ttk.Scrollbar(self.fr_consultas, orient=VERTICAL)
+        self.vscroll = ttk.Scrollbar(self.fr_tabla, orient=VERTICAL)
         self.vscroll.grid(row=7, column=9, rowspan=7, sticky=W+N+S)
 
-        self.hscroll = ttk.Scrollbar(self.fr_consultas, orient=HORIZONTAL)
+        self.hscroll = ttk.Scrollbar(self.fr_tabla, orient=HORIZONTAL)
         self.hscroll.grid(row=14, column=0, columnspan=9, sticky=W+E+N)
 
         # Scroll bars binding
@@ -219,7 +225,8 @@ class GUI(ttk.Frame):
         self.tabla.configure(xscrollcommand=self.hscroll.set)
 
         # Buttons
-        self.bo_mostrar = ttk.Button(self.fr_consultas, text="Mostrar todo", width=16)
+        self.bo_mostrar = ttk.Button(self.fr_consultas, text="Mostrar todo", width=16,
+                                     command=self.show_all)
         self.bo_mostrar.grid(row=1, column=9, sticky=W)
 
         self.bo_limpiar = ttk.Button(self.fr_consultas, text="Limpiar campos", width=16)
@@ -352,7 +359,7 @@ class GUI(ttk.Frame):
         self.en_ag_placas2 = ttk.Entry(self.lf_ag_factura, textvariable=self.ag_placas2)
         self.en_ag_placas2.grid(row=2, column=2)
 
-        self.la_ag_costo = ttk.Label(self.lf_ag_factura, text="Costo total*")
+        self.la_ag_costo = ttk.Label(self.lf_ag_factura, text="Costo del vehículo*")
         self.la_ag_costo.grid(row=1, column=3)
 
         self.ag_costo = StringVar()
@@ -387,12 +394,12 @@ class GUI(ttk.Frame):
         self.en_ag_id_factura3 = ttk.Entry(self.lf_ag_poliza, textvariable=self.ag_id_factura3)
         self.en_ag_id_factura3.grid(row=2, column=2)
 
-        self.la_ag_costo_poliza = ttk.Label(self.lf_ag_poliza, text="Costo total+")
-        self.la_ag_costo_poliza.grid(row=1, column=3)
+        self.la_ag_costo_seguro = ttk.Label(self.lf_ag_poliza, text="Costo del seguro+")
+        self.la_ag_costo_seguro.grid(row=1, column=3)
 
-        self.ag_costo_poliza = StringVar()
-        self.en_ag_costo_poliza = ttk.Entry(self.lf_ag_poliza, textvariable=self.ag_costo_poliza)
-        self.en_ag_costo_poliza.grid(row=1, column=4)
+        self.ag_costo_seguro = StringVar()
+        self.en_ag_costo_seguro = ttk.Entry(self.lf_ag_poliza, textvariable=self.ag_costo_seguro)
+        self.en_ag_costo_seguro.grid(row=1, column=4)
 
         self.la_ag_prima = ttk.Label(self.lf_ag_poliza, text="Prima asegurada+")
         self.la_ag_prima.grid(row=2, column=3)
@@ -455,7 +462,7 @@ class GUI(ttk.Frame):
         if self.ag_placas2.get():
             data['placas'] = self.ag_placas2.get()
         if self.ag_costo.get():
-            data['costo_total'] = float(self.ag_costo.get())
+            data['costo_vehiculo'] = float(self.ag_costo.get())
         self.control.insert_factura(**data)
 
     def gen_poliza(self):
@@ -466,8 +473,8 @@ class GUI(ttk.Frame):
             data['id_factura'] = int(self.ag_id_factura3.get())
         if self.ag_prima.get():
             data['prima_asegurada'] = float(self.ag_prima.get())
-        if self.ag_costo_poliza.get():
-            data['costo_total'] = float(self.ag_costo_poliza.get())
+        if self.ag_costo_seguro.get():
+            data['costo_seguro'] = float(self.ag_costo_seguro.get())
         if self.ag_apertura.get():
             data['fecha_apertura'] = self.ag_apertura.get()
         if self.ag_vencimiento.get():
@@ -485,6 +492,122 @@ class GUI(ttk.Frame):
     def importar_facturas(self):
         path = askopenfilename()
         self.control.insert_facturas(path)
+
+    def get_active_fields(self):
+        active_fields = dict()
+
+        active_fields["id_cliente"] = self.val_id_cliente.get()
+        active_fields["nombre"] = self.val_nombre.get()
+        active_fields["direccion"] = self.val_direccion.get()
+        active_fields["placas"] = self.val_placas.get()
+        active_fields["marca"] = self.val_marca.get()
+        active_fields["modelo"] = self.val_modelo.get()
+        active_fields["id_factura"] = self.val_id_factura.get()
+        active_fields["costo_vehiculo"] = self.val_costo_vehiculo.get()
+        active_fields["prima_asegurada"] = self.val_prima_asegurada.get()
+        active_fields["costo_seguro"] = self.val_costo_seguro.get()
+        active_fields["fecha_apertura"] = self.val_fecha_apertura.get()
+        active_fields["fecha_vencimiento"] = self.val_fecha_vencimiento.get()
+
+        return active_fields
+
+    def show_all(self):
+        self.clear_results()
+
+        # Set columnas
+        all_fields = {
+            # Clientes
+            "id_cliente": True,
+            "nombre": True,
+            "direccion": True,
+            # Facturas
+            "id_factura": True,
+            "costo_vehiculo": True,
+            # Pólizas
+            "costo_seguro": True,
+            "prima_asegurada": True,
+            "fecha_apertura": True,
+            "fecha_vencimiento": True,
+            # Vehículos
+            "placas": True,
+            "marca": True,
+            "modelo": True
+        }
+        self.set_columnas(all_fields)
+        self.fields_current_query = all_fields
+
+        # Query
+        self.control.query_all(all_fields)
+
+        # Agregar filas
+        for i, row in enumerate(self.control.connection.cursor):
+            self.tabla.insert("", END, text=str(i+1), values=row)
+
+    def set_columnas(self, fields):
+        # Set columns
+        self.tabla.configure(columns=tuple(fields))
+        for column in fields.keys():
+            self.tabla.column(column, width=15)
+
+        # Set headings
+        self.tabla.heading("#0", text="No.")
+        if fields.get("id_cliente", False):
+            self.tabla.heading("id_cliente", text="id_cliente")
+        if fields.get("nombre", False):
+            self.tabla.heading("nombre", text="Nombre")
+        if fields.get("direccion", False):
+            self.tabla.heading("direccion", text="Dirección")
+        if fields.get("placas", False):
+            self.tabla.heading("placas", text="Placas")
+        if fields.get("modelo", False):
+            self.tabla.heading("modelo", text="Modelo")
+        if fields.get("marca", False):
+            self.tabla.heading("marca", text="Marca")
+        if fields.get("id_factura", False):
+            self.tabla.heading("id_factura", text="id_factura")
+        if fields.get("costo_vehiculo", False):
+            self.tabla.heading("costo_vehiculo", text="Costo del vehículo")
+        if fields.get("prima_asegurada", False):
+            self.tabla.heading("prima_asegurada", text="Prima asegurada")
+        if fields.get("costo_seguro", False):
+            self.tabla.heading("costo_seguro", text="Costo del seguro")
+        if fields.get("fecha_apertura", False):
+            self.tabla.heading("fecha_apertura", text="Fecha de apertura")
+        if fields.get("fecha_vencimiento", False):
+            self.tabla.heading("fecha_vencimiento", text="Fecha de vencimiento")
+
+    def clear_results(self):
+        for child in self.tabla.get_children():
+            self.tabla.delete(child)
+
+    def populate_fields(self, e):
+        row_id = self.tabla.selection()[0]
+
+        if self.fields_current_query["id_cliente"]:
+            self.id_cliente.set(str(self.tabla.set(row_id, "id_cliente")))
+        if self.fields_current_query["nombre"]:
+            self.nombre.set(str(self.tabla.set(row_id, "nombre")))
+        if self.fields_current_query["direccion"]:
+            self.direccion.set(str(self.tabla.set(row_id, "direccion")))
+        if self.fields_current_query["placas"]:
+            self.placas.set(str(self.tabla.set(row_id, "placas")))
+        if self.fields_current_query["marca"]:
+            self.marca.set(str(self.tabla.set(row_id, "marca")))
+        if self.fields_current_query["modelo"]:
+            self.modelo.set(str(self.tabla.set(row_id, "modelo")))
+        if self.fields_current_query["id_factura"]:
+            self.id_factura.set(str(self.tabla.set(row_id, "id_factura")))
+        if self.fields_current_query["costo_vehiculo"]:
+            self.costo_vehiculo.set(str(self.tabla.set(row_id, "costo_vehiculo")))
+        if self.fields_current_query["prima_asegurada"]:
+            self.prima_asegurada.set(str(self.tabla.set(row_id, "prima_asegurada")))
+        if self.fields_current_query["costo_seguro"]:
+            self.costo_seguro.set(str(self.tabla.set(row_id, "costo_seguro")))
+        if self.fields_current_query["fecha_apertura"]:
+            self.fecha_apertura.set(str(self.tabla.set(row_id, "fecha_apertura")))
+        if self.fields_current_query["fecha_vencimiento"]:
+            self.fecha_vencimiento.set(str(self.tabla.set(row_id, "fecha_vencimiento")))
+
 
 
 if __name__ == '__main__':

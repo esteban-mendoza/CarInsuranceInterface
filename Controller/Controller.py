@@ -88,13 +88,13 @@ class Controller:
             self.connection.update(update_statement, (id_factura[0], placas))
 
     def gen_poliza(self, **data):
-        costo_factura = self.get_costo_factura(data['id_factura'])
+        costo_vehiculo = self.get_costo_vehiculo(data['id_factura'])
 
-        prima = costo_factura * 0.85
+        prima = costo_vehiculo * 0.85
         data['prima_asegurada'] = data.get('prima_asegurada', prima)
 
-        costo_seguro = costo_factura * (6.67/12)/100
-        data['costo_total'] = data.get('costo_total', costo_seguro)
+        costo_seguro = costo_vehiculo * (6.67/12)/100
+        data['costo_seguro'] = data.get('costo_seguro', costo_seguro)
 
         fecha_apertura = date.today().strftime("%Y-%m-%d")
         data['fecha_apertura'] = data.get('fecha_apertura', fecha_apertura)
@@ -113,10 +113,41 @@ class Controller:
         except Exception as e:
             logging.error(traceback.format_exc())
 
-    def get_costo_factura(self, id_factura):
-        query = ("SELECT costo_total FROM factura "
+    def get_costo_vehiculo(self, id_factura):
+        query = ("SELECT costo_vehiculo FROM factura "
                  "WHERE id_factura = %s")
 
         self.connection.query(query, (id_factura,))
 
         return self.connection.cursor.fetchone()[0]
+
+    def query_all(self, all_fields):
+        # all_fields = {
+        #     # Clientes
+        #     "id_cliente": True,
+        #     "nombre": True,
+        #     "direccion": True,
+        #     # Pólizas
+        #     "costo_seguro": True,
+        #     "prima_asegurada": True,
+        #     "fecha_apertura": True,
+        #     "fecha_vencimiento": True,
+        #     # Facturas
+        #     "id_factura": True,
+        #     "costo_vehiculo": True,
+        #     # Vehículos
+        #     "placas": True,
+        #     "marca": True,
+        #     "modelo": True
+        # }
+
+        fields, values = self.str_helper(all_fields)
+
+        query = ("SELECT " + fields + " "
+                 "FROM cliente "
+                 "NATURAL JOIN poliza "
+                 "NATURAL JOIN factura "
+                 "NATURAL JOIN vehiculo"
+                 )
+
+        self.connection.query(query)

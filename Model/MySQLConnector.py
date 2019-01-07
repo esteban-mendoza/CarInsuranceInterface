@@ -49,9 +49,22 @@ if __name__ == '__main__':
     # Example
     cnx = MySQLConnector()
 
-    cnx.query("SELECT * FROM cliente")
-    print(cnx.cursor)
+    # cnx.query("SELECT * FROM cliente")
+    # print(cnx.cursor)
+    #
+    # for row in cnx.cursor:
+    #     print(row)
 
+
+    cnx.query("create temporary table temp "
+              "select * from "
+              "cliente "
+              "NATURAL JOIN poliza "
+              "NATURAL JOIN factura "
+              "NATURAL JOIN vehiculo")
+    cnx.connection.commit()
+
+    cnx.query("select * from temp")
     for row in cnx.cursor:
         print(row)
 

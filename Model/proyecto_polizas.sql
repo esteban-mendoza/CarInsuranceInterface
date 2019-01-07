@@ -16,14 +16,13 @@ CREATE TABLE IF NOT EXISTS Vehiculo (
 	modelo VARCHAR(20),
 	marca VARCHAR(20),
 	PRIMARY KEY (placas),
-	INDEX (placas),
-	INDEX (id_factura));
+	INDEX (placas));
 
 # Tabla Factura
 CREATE TABLE IF NOT EXISTS Factura (
 	id_factura INT NOT NULL AUTO_INCREMENT,
 	placas VARCHAR(10) NOT NULL,
-	costo_total FLOAT NOT NULL,
+	costo_vehiculo FLOAT NOT NULL,
 	PRIMARY KEY (id_factura),
 	INDEX (id_factura),
 	FOREIGN KEY (placas) REFERENCES Vehiculo(placas));
@@ -34,7 +33,7 @@ CREATE TABLE IF NOT EXISTS Poliza (
 	id_cliente INT NOT NULL,
 	id_factura INT NOT NULL,
 	prima_asegurada FLOAT,
-	costo_total FLOAT,
+	costo_seguro FLOAT,
 	fecha_apertura DATE,
 	fecha_vencimiento DATE,
 	PRIMARY KEY (id_cliente, id_factura),

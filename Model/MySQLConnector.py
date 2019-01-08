@@ -22,6 +22,7 @@ class MySQLConnector:
                 print(err)
 
     def create_cursor(self, dictionary=False):
+        self.close_cursor()
         self.cursor = self.connection.cursor(dictionary=dictionary)
 
     def close_cursor(self):
@@ -39,7 +40,7 @@ class MySQLConnector:
         return self.cursor.fetchone()
 
     def fetchall(self):
-        return self.cursor.fechall()
+        return self.cursor.fetchall()
 
     def insert(self, query):
         self.query(query)

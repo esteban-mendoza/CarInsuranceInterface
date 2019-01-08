@@ -229,7 +229,8 @@ class GUI(ttk.Frame):
                                      command=self.show_all)
         self.bo_mostrar.grid(row=1, column=9, sticky=W)
 
-        self.bo_limpiar = ttk.Button(self.fr_consultas, text="Limpiar campos", width=16)
+        self.bo_limpiar = ttk.Button(self.fr_consultas, text="Limpiar campos", width=16,
+                                     command=self.limpiar_campos)
         self.bo_limpiar.grid(row=2, column=9, sticky=W)
 
         self.bo_buscar = ttk.Button(self.fr_consultas, text="Buscar", width=16)
@@ -310,12 +311,12 @@ class GUI(ttk.Frame):
         self.en_ag_placas = ttk.Entry(self.lf_ag_vehiculo, textvariable=self.ag_placas)
         self.en_ag_placas.grid(row=1, column=2)
 
-        self.la_ag_id_factura = ttk.Label(self.lf_ag_vehiculo, text="id_factura")
-        self.la_ag_id_factura.grid(row=2, column=1)
-
-        self.ag_id_factura = StringVar()
-        self.en_ag_id_factura = ttk.Entry(self.lf_ag_vehiculo, textvariable=self.ag_id_factura)
-        self.en_ag_id_factura.grid(row=2, column=2)
+        # self.la_ag_id_factura = ttk.Label(self.lf_ag_vehiculo, text="id_factura")
+        # self.la_ag_id_factura.grid(row=2, column=1)
+        #
+        # self.ag_id_factura = StringVar()
+        # self.en_ag_id_factura = ttk.Entry(self.lf_ag_vehiculo, textvariable=self.ag_id_factura)
+        # self.en_ag_id_factura.grid(row=2, column=2)
 
         self.la_ag_marca = ttk.Label(self.lf_ag_vehiculo, text="Marca")
         self.la_ag_marca.grid(row=1, column=3)
@@ -442,18 +443,34 @@ class GUI(ttk.Frame):
         if self.ag_direccion.get():
             data['direccion'] = self.ag_direccion.get()
         self.control.insert_cliente(**data)
+        self.show_new_cliente(**data)
+
+    def show_new_cliente(self, **data):
+        new_cliente = self.control.search_cliente(**data)
+
+        self.ag_id_cliente.set(new_cliente['id_cliente'])
+        self.ag_nombre.set(new_cliente['nombre'])
+        self.ag_direccion.set(new_cliente['direccion'])
 
     def insert_vehiculo(self):
         data = dict()
         if self.ag_placas.get():
             data['placas'] = self.ag_placas.get()
-        if self.ag_id_factura.get():
-            data['id_factura'] = int(self.ag_id_factura.get())
+        # if self.ag_id_factura.get():
+        #     data['id_factura'] = int(self.ag_id_factura.get())
         if self.ag_marca.get():
             data['marca'] = self.ag_marca.get()
         if self.ag_modelo.get():
             data['modelo'] = self.ag_modelo.get()
         self.control.insert_vehiculo(**data)
+        self.show_new_vehiculo(**data)
+
+    def show_new_vehiculo(self, **data):
+        new_vehiculo = self.control.search_vehiculo(**data)
+
+        self.ag_placas.set(new_vehiculo['placas'])
+        self.ag_marca.set(new_vehiculo['marca'])
+        self.ag_modelo.set(new_vehiculo['modelo'])
 
     def insert_factura(self):
         data = dict()
@@ -464,6 +481,14 @@ class GUI(ttk.Frame):
         if self.ag_costo.get():
             data['costo_vehiculo'] = float(self.ag_costo.get())
         self.control.insert_factura(**data)
+        self.show_new_factura(**data)
+
+    def show_new_factura(self, **data):
+        new_factura = self.control.search_factura(**data)
+
+        self.ag_id_factura2.set(new_factura['id_factura'])
+        self.ag_placas2.set(new_factura['placas'])
+        self.ag_costo.set(new_factura['costo_vehiculo'])
 
     def gen_poliza(self):
         data = dict()
@@ -480,6 +505,17 @@ class GUI(ttk.Frame):
         if self.ag_vencimiento.get():
             data['fecha_vencimiento'] = self.ag_vencimiento.get()
         self.control.gen_poliza(**data)
+        self.show_new_poliza(**data)
+
+    def show_new_poliza(self, **data):
+        new_poliza = self.control.search_poliza(**data)
+
+        self.ag_id_cliente2.set(new_poliza['id_cliente'])
+        self.ag_id_factura3.set(new_poliza['id_factura'])
+        self.ag_prima.set(new_poliza['prima_asegurada'])
+        self.ag_costo_seguro.set(new_poliza['costo_seguro'])
+        self.ag_apertura.set(new_poliza['fecha_apertura'])
+        self.ag_vencimiento.set(new_poliza['fecha_vencimiento'])
 
     def importar_clientes(self):
         path = askopenfilename()
@@ -580,7 +616,37 @@ class GUI(ttk.Frame):
         for child in self.tabla.get_children():
             self.tabla.delete(child)
 
-    def populate_fields(self, e):
+    def limpiar_campos(self):
+        # Limpiar cliente
+        self.val_id_cliente.set(False)
+        self.id_cliente.set("")
+        self.val_nombre.set(False)
+        self.nombre.set("")
+        self.val_direccion.set(False)
+        self.direccion.set("")
+        # Limpiar vehiculo
+        self.val_placas.set(False)
+        self.placas.set("")
+        self.val_marca.set(False)
+        self.marca.set("")
+        self.val_modelo.set(False)
+        self.modelo.set("")
+        # Limpiar factura
+        self.val_id_factura.set(False)
+        self.id_factura.set("")
+        self.val_costo_vehiculo.set(False)
+        self.costo_vehiculo.set("")
+        # Limpiar póliza
+        self.val_costo_seguro.set(False)
+        self.costo_seguro.set("")
+        self.val_prima_asegurada.set(False)
+        self.prima_asegurada.set("")
+        self.val_fecha_apertura.set(False)
+        self.fecha_apertura.set("")
+        self.val_fecha_vencimiento.set(False)
+        self.fecha_vencimiento.set("")
+
+    def populate_fields(self, event):
         row_id = self.tabla.selection()[0]
 
         if self.fields_current_query["id_cliente"]:
@@ -607,7 +673,6 @@ class GUI(ttk.Frame):
             self.fecha_apertura.set(str(self.tabla.set(row_id, "fecha_apertura")))
         if self.fields_current_query["fecha_vencimiento"]:
             self.fecha_vencimiento.set(str(self.tabla.set(row_id, "fecha_vencimiento")))
-
 
 
 if __name__ == '__main__':

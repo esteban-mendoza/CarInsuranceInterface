@@ -31,6 +31,17 @@ class Controller:
 
         return fields, values
 
+    @staticmethod
+    def where_helper(data):
+        where_clause = str()
+
+        for key, value in data.items():
+            where_clause += "{}=\'{}\' AND ".format(key, value)
+
+        where_clause = where_clause.rstrip(" AND ")
+
+        return where_clause
+
     def insert_cliente(self, **data):
         fields, values = self.str_helper(data)
 
@@ -41,6 +52,16 @@ class Controller:
             self.connection.insert(query)
         except Exception as e:
             logging.error(traceback.format_exc())
+
+    def search_cliente(self, **data):
+        clauses = self.where_helper(data)
+
+        query = ("SELECT * " 
+                 "FROM cliente "
+                 "WHERE " + clauses)
+
+        self.connection.query(query, dictionary=True)
+        return self.connection.fetchone()
 
     def insert_clientes(self, path):
         print(path)
@@ -56,6 +77,16 @@ class Controller:
         except Exception as e:
             logging.error(traceback.format_exc())
 
+    def search_vehiculo(self, **data):
+        clauses = self.where_helper(data)
+
+        query = ("SELECT * " 
+                 "FROM vehiculo "
+                 "WHERE " + clauses)
+
+        self.connection.query(query, dictionary=True)
+        return self.connection.fetchone()
+
     def insert_vehiculos(self, path):
         print(path)
 
@@ -70,6 +101,16 @@ class Controller:
             self.update_vehiculo(data['placas'])
         except Exception as e:
             logging.error(traceback.format_exc())
+
+    def search_factura(self, **data):
+        clauses = self.where_helper(data)
+
+        query = ("SELECT * " 
+                 "FROM factura "
+                 "WHERE " + clauses)
+
+        self.connection.query(query, dictionary=True)
+        return self.connection.fetchone()
 
     def insert_facturas(self, path):
         pass
@@ -112,6 +153,16 @@ class Controller:
             self.connection.insert(query)
         except Exception as e:
             logging.error(traceback.format_exc())
+
+    def search_poliza(self, **data):
+        clauses = self.where_helper(data)
+
+        query = ("SELECT * " 
+                 "FROM poliza "
+                 "WHERE " + clauses)
+
+        self.connection.query(query, dictionary=True)
+        return self.connection.fetchone()
 
     def get_costo_vehiculo(self, id_factura):
         query = ("SELECT costo_vehiculo FROM factura "

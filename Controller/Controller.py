@@ -53,14 +53,17 @@ class Controller:
         except Exception as e:
             logging.error(traceback.format_exc())
 
-    def search_cliente(self, **data):
+    def last_cliente(self, **data):
+        if 'id_cliente' not in data:
+            data['id_cliente'] = self.last_id()
+
         clauses = self.where_helper(data)
 
         query = ("SELECT * " 
                  "FROM cliente "
                  "WHERE " + clauses)
 
-        self.connection.query(query, dictionary=True)
+        self.connection.query(query)
         return self.connection.fetchone()
 
     def insert_clientes(self, path):
@@ -77,14 +80,14 @@ class Controller:
         except Exception as e:
             logging.error(traceback.format_exc())
 
-    def search_vehiculo(self, **data):
+    def last_vehiculo(self, **data):
         clauses = self.where_helper(data)
 
         query = ("SELECT * " 
                  "FROM vehiculo "
                  "WHERE " + clauses)
 
-        self.connection.query(query, dictionary=True)
+        self.connection.query(query)
         return self.connection.fetchone()
 
     def insert_vehiculos(self, path):
@@ -102,14 +105,17 @@ class Controller:
         except Exception as e:
             logging.error(traceback.format_exc())
 
-    def search_factura(self, **data):
+    def last_factura(self, **data):
+        if 'id_factura' not in data:
+            data['id_factura'] = self.last_id()
+
         clauses = self.where_helper(data)
 
         query = ("SELECT * " 
                  "FROM factura "
                  "WHERE " + clauses)
 
-        self.connection.query(query, dictionary=True)
+        self.connection.query(query)
         return self.connection.fetchone()
 
     def insert_facturas(self, path):
@@ -125,8 +131,8 @@ class Controller:
                             "SET id_factura = COALESCE(id_factura, %s) "
                             "WHERE placas = %s")
 
-        for id_factura in self.connection.cursor:
-            self.connection.update(update_statement, (id_factura[0], placas))
+        for reg in self.connection.fetchall():
+            self.connection.update(update_statement, (reg['id_factura'], placas))
 
     def gen_poliza(self, **data):
         costo_vehiculo = self.get_costo_vehiculo(data['id_factura'])
@@ -154,14 +160,14 @@ class Controller:
         except Exception as e:
             logging.error(traceback.format_exc())
 
-    def search_poliza(self, **data):
+    def last_poliza(self, **data):
         clauses = self.where_helper(data)
 
         query = ("SELECT * " 
                  "FROM poliza "
                  "WHERE " + clauses)
 
-        self.connection.query(query, dictionary=True)
+        self.connection.query(query)
         return self.connection.fetchone()
 
     def get_costo_vehiculo(self, id_factura):
@@ -170,28 +176,9 @@ class Controller:
 
         self.connection.query(query, (id_factura,))
 
-        return self.connection.cursor.fetchone()[0]
+        return self.connection.fetchone()['costo_vehiculo']
 
     def query_all(self, all_fields):
-        # all_fields = {
-        #     # Clientes
-        #     "id_cliente": True,
-        #     "nombre": True,
-        #     "direccion": True,
-        #     # Pólizas
-        #     "costo_seguro": True,
-        #     "prima_asegurada": True,
-        #     "fecha_apertura": True,
-        #     "fecha_vencimiento": True,
-        #     # Facturas
-        #     "id_factura": True,
-        #     "costo_vehiculo": True,
-        #     # Vehículos
-        #     "placas": True,
-        #     "marca": True,
-        #     "modelo": True
-        # }
-
         fields, values = self.str_helper(all_fields)
 
         query = ("SELECT " + fields + " "
@@ -202,3 +189,11 @@ class Controller:
                  )
 
         self.connection.query(query)
+        registers = self.connection.fetchall()
+        return [tuple(reg.values()) for reg in registers]
+
+    def last_id(self):
+        query = "SELECT LAST_INSERT_ID()"
+
+        self.connection.query(query)
+        return self.connection.fetchone()['LAST_INSERT_ID()']

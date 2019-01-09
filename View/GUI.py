@@ -446,7 +446,7 @@ class GUI(ttk.Frame):
         self.show_new_cliente(**data)
 
     def show_new_cliente(self, **data):
-        new_cliente = self.control.search_cliente(**data)
+        new_cliente = self.control.last_cliente(**data)
 
         self.ag_id_cliente.set(new_cliente['id_cliente'])
         self.ag_nombre.set(new_cliente['nombre'])
@@ -466,7 +466,7 @@ class GUI(ttk.Frame):
         self.show_new_vehiculo(**data)
 
     def show_new_vehiculo(self, **data):
-        new_vehiculo = self.control.search_vehiculo(**data)
+        new_vehiculo = self.control.last_vehiculo(**data)
 
         self.ag_placas.set(new_vehiculo['placas'])
         self.ag_marca.set(new_vehiculo['marca'])
@@ -484,7 +484,7 @@ class GUI(ttk.Frame):
         self.show_new_factura(**data)
 
     def show_new_factura(self, **data):
-        new_factura = self.control.search_factura(**data)
+        new_factura = self.control.last_factura(**data)
 
         self.ag_id_factura2.set(new_factura['id_factura'])
         self.ag_placas2.set(new_factura['placas'])
@@ -508,7 +508,7 @@ class GUI(ttk.Frame):
         self.show_new_poliza(**data)
 
     def show_new_poliza(self, **data):
-        new_poliza = self.control.search_poliza(**data)
+        new_poliza = self.control.last_poliza(**data)
 
         self.ag_id_cliente2.set(new_poliza['id_cliente'])
         self.ag_id_factura3.set(new_poliza['id_factura'])
@@ -573,10 +573,10 @@ class GUI(ttk.Frame):
         self.fields_current_query = all_fields
 
         # Query
-        self.control.query_all(all_fields)
+        rows = self.control.query_all(all_fields)
 
         # Agregar filas
-        for i, row in enumerate(self.control.connection.cursor):
+        for i, row in enumerate(rows):
             self.tabla.insert("", END, text=str(i+1), values=row)
 
     def set_columnas(self, fields):

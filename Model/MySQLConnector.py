@@ -11,7 +11,7 @@ class MySQLConnector:
             self.connection = MySQLConnection(**config)
             print("Connection created")
 
-            self.cursor = None
+            self.cursor = self.connection.cursor(dictionary=True)
 
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
@@ -21,16 +21,7 @@ class MySQLConnector:
             else:
                 print(err)
 
-    def create_cursor(self, dictionary=False):
-        self.close_cursor()
-        self.cursor = self.connection.cursor(dictionary=dictionary)
-
-    def close_cursor(self):
-        if self.cursor is not None:
-            self.cursor.close()
-
-    def query(self, query, args=None, dictionary=False):
-        self.create_cursor(dictionary)
+    def query(self, query, args=None):
         if args is None:
             self.cursor.execute(query)
         else:
@@ -55,7 +46,7 @@ class MySQLConnector:
         self.connection.commit()
 
     def close(self):
-        self.close_cursor()
+        self.cursor.close()
         self.connection.close()
         print("Connection closed")
 

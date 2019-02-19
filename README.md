@@ -1,6 +1,7 @@
-# Proyecto Final
+# Proyecto Final: Manejo de Datos
 
-Autor: _Jorge Esteban Mendoza Ortiz (418002863)_
+Profesor: M. en C. Miguel Ángel Pérez León
+Autor: _Jorge Esteban Mendoza Ortiz_
 
 Email: [esteban.mendoza@ciencias.unam.mx](mailto:esteban.mendoza@ciencias.unam.mx)
 

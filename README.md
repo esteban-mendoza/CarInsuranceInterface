@@ -1,4 +1,4 @@
-# Proyecto Final: Manejo de Datos
+# Interfaz para aseguradora de autos
 
 Profesor: M. en C. Miguel Ángel Pérez León
 
